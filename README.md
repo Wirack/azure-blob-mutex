@@ -21,13 +21,13 @@ npm install azure-blob-mutex
 First, import the module into your project.
 
 ```javascript
-import { LeasedRunHandler } from "azure-blob-mutex";
+import { AzureBlobMutex } from "azure-blob-mutex";
 ```
 
-Then, initialize the `LeasedRunHandler` with your Azure Blob Storage configuration.
+Then, initialize the `AzureBlobMutex` with your Azure Blob Storage configuration.
 
 ```javascript
-const handler = await LeasedRunHandler.create({
+const mutex = await AzureBlobMutex.create({
   blobStorageConnectionString: '<Your Blob Storage Connection String>',
   containerName: '<Your Container Name>',
   keyName: '<Your Key Name>',
@@ -38,7 +38,7 @@ const handler = await LeasedRunHandler.create({
 Finally, run your code with a lease.
 
 ```javascript
-await handler.runWithLease(async () => {
+await mutex.run(async () => {
   // Your code here
 });
 ```
@@ -47,7 +47,7 @@ Remember to replace placeholders like `<Your Blob Storage Connection String>` wi
 
 ## Configuration Options
 
-Here are the options you can use to configure the `LeasedRunHandler`.
+Here are the options you can use to configure the `AzureBlobMutex`.
 
 - `blobStorageConnectionString`: Your Azure Blob Storage connection string.
 - `containerName`: The name of the blob container.

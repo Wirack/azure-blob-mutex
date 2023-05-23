@@ -1,6 +1,6 @@
 import { BlobLeaseClient, BlobServiceClient } from "@azure/storage-blob";
 
-interface LeasedRunHandlerConfig {
+interface AzureBlobMutexConfig {
   blobStorageConnectionString: string;
   containerName: string;
   keyName: string;
@@ -8,11 +8,11 @@ interface LeasedRunHandlerConfig {
   maxLeaseDuration?: number;
 }
 
-export class LeasedRunHandler {
+export class AzureBlobMutex {
   private blobLeaseClient: BlobLeaseClient;
-  private config: LeasedRunHandlerConfig;
+  private config: AzureBlobMutexConfig;
 
-  public static async create(config: LeasedRunHandlerConfig) {
+  public static async create(config: AzureBlobMutexConfig) {
     const blobServiceClient = BlobServiceClient.fromConnectionString(
       config.blobStorageConnectionString
     );
@@ -29,15 +29,15 @@ export class LeasedRunHandler {
       await blockBlobClient.upload("", 0);
     }
 
-    return new LeasedRunHandler(blockBlobClient.getBlobLeaseClient(), config);
+    return new AzureBlobMutex(blockBlobClient.getBlobLeaseClient(), config);
   }
 
-  constructor(client: BlobLeaseClient, config: LeasedRunHandlerConfig) {
+  constructor(client: BlobLeaseClient, config: AzureBlobMutexConfig) {
     this.blobLeaseClient = client;
     this.config = config;
   }
 
-  public async runWithLease<T>(func: { (): Promise<T> }): Promise<T> {
+  public async run<T>(func: { (): Promise<T> }): Promise<T> {
     try {
       await this.blobLeaseClient.acquireLease(
         this.config.maxLeaseDuration || 15

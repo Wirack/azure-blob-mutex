@@ -1,0 +1,28 @@
+{
+  "name": "azure-blob-mutex",
+  "version": "1.0.0",
+  "description": "`azure-blob-mutex` is a Node.js package that utilizes Azure Blob Storage to implement a global mutex (or lock), helping prevent race conditions across different processes in your applications. By acquiring a lease on a blob, it provides a global reference point to ensure exclusive access for certain operations, thereby guarding against concurrent execution.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wirack/azure-blob-mutex.git"
+  },
+  "keywords": [],
+  "author": "Søren Als <s_s_a_92@hotmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Wirack/azure-blob-mutex/issues"
+  },
+  "homepage": "https://github.com/Wirack/azure-blob-mutex#readme",
+  "dependencies": {
+    "@azure/storage-blob": "^12.14.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
+}
